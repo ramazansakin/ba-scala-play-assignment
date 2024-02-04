@@ -1,24 +1,36 @@
 package controllers
 
-import javax.inject._
-import play.api._
+import com.google.inject.Singleton
+import org.jsoup.Jsoup
 import play.api.mvc._
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
-@Singleton
-class HomeController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
+import javax.inject.Inject
+import scala.concurrent.ExecutionContext
+import scala.util.Random
 
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
+@Singleton
+class HomeController @Inject()(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext) extends BaseController {
+
   def index() = Action { implicit request: Request[AnyContent] =>
-    Ok(views.html.index())
+    // Fetch XKCD archive page
+    val xkcdArchiveUrl = "https://xkcd.com/archive/"
+    val xkcdArchivePage = Jsoup.connect(xkcdArchiveUrl).get()
+
+    // Extract all links to archived comics
+    val comicLinks = xkcdArchivePage.select("#middleContainer a[href^='/']")
+
+    // Take a random link
+    val randomLink = if (comicLinks.size() > 0) {
+      val randomIndex = Random.nextInt(comicLinks.size())
+      val randomComicLink = comicLinks.get(randomIndex).attr("href")
+      s"https://xkcd.com$randomComicLink"
+    } else {
+      // Default link if no comics found
+      "https://xkcd.com/"
+    }
+
+    // Render the random link on the index page
+    Ok(views.html.index(randomLink))
   }
+
 }

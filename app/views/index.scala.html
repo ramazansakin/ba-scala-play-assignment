@@ -1,5 +1,15 @@
-@()
+@(randomLink: String)
 
-@main("Welcome to Play") {
-  <h1>Welcome to Play!</h1>
-}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Random XKCD Comic</title>
+  </head>
+  <body>
+    <h1>XKCD Comic</h1>
+    <p>Click on the random comic:</p>
+    <a href="@randomLink" target="_blank">@randomLink</a>
+  </body>
+</html>
+

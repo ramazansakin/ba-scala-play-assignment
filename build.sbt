@@ -8,6 +8,7 @@ lazy val root = (project in file("."))
     name := """ba-scala-play-assignment""",
     libraryDependencies ++= Seq(
       guice,
-      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test
+      "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
+      "org.jsoup" % "jsoup" % "1.14.3"
     )
   )
