@@ -1,4 +1,4 @@
-ThisBuild / scalaVersion := "2.13.9"
+ThisBuild / scalaVersion := "2.13.10"
 
 ThisBuild / version := "1.0-SNAPSHOT"
 
@@ -9,6 +9,6 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
-      "org.jsoup" % "jsoup" % "1.14.3"
+      "org.jsoup" % "jsoup" % "1.15.4"
     )
   )

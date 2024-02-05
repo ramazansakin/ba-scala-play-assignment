@@ -14,9 +14,10 @@ import scala.util.Random
 @Singleton
 class HomeController @Inject()(val controllerComponents: ControllerComponents)(implicit ec: ExecutionContext) extends BaseController {
 
-  def index() = Action { implicit request: Request[AnyContent] =>
-    val xkcdArchiveUrl = "https://xkcd.com/archive/"
-    val localFilePath = "public/pages/xkcd_archive.html" // Update the path to your local file
+  def index() = Action { _ =>
+    val xkcdBaseUrl = "https://xkcd.com"
+    val xkcdArchiveUrl = xkcdBaseUrl + "/archive/"
+    val localFilePath = "public/pages/xkcd_archive.html"
 
     // Try to fetch XKCD archive page online
     val xkcdArchivePage: Document = try {
@@ -38,10 +39,9 @@ class HomeController @Inject()(val controllerComponents: ControllerComponents)(i
       randomComicLink
     } else {
       // Default link if no comics found
-      "https://xkcd.com/"
+      xkcdBaseUrl
     }
 
-    // Render the random link on the index page
     Ok(views.html.index(randomLink))
   }
 
